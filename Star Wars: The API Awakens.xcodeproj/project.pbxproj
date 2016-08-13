@@ -58,10 +58,18 @@
 				D4559CD21D5EA6B300CA3FBE /* ViewController.swift */,
 				D4559CD41D5EA6B300CA3FBE /* Main.storyboard */,
 				D4559CD71D5EA6B300CA3FBE /* Assets.xcassets */,
+				D4559CE21D5EA6C500CA3FBE /* Extra */,
+			);
+			path = "Star Wars: The API Awakens";
+			sourceTree = "<group>";
+		};
+		D4559CE21D5EA6C500CA3FBE /* Extra */ = {
+			isa = PBXGroup;
+			children = (
 				D4559CD91D5EA6B300CA3FBE /* LaunchScreen.storyboard */,
 				D4559CDC1D5EA6B300CA3FBE /* Info.plist */,
 			);
-			path = "Star Wars: The API Awakens";
+			name = Extra;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
