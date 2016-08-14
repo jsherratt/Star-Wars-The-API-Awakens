@@ -32,7 +32,7 @@ class HomeViewController: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor(red: 170/255.0, green: 170/255.0, blue: 170/255.0, alpha: 1.0), NSFontAttributeName:UIFont.boldSystemFontOfSize(20.0)]
         
         //Add both of the break lines to the view
         characterBreakLine.backgroundColor = UIColor(red: 56/255.0, green: 57/255.0, blue: 59/255.0, alpha: 0.5)
