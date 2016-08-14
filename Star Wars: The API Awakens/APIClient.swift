@@ -8,6 +8,9 @@
 
 import Foundation
 
+//-----------------------
+//MARK: Variables
+//-----------------------
 public let SWNetworkingErrorDomain = "com.jsherratt.Star-Wars--The-API-Awakens.NetworkingError"
 public let MissingHTTPResponseError: Int = 10
 public let UnexpectedResponseError: Int = 20
@@ -16,12 +19,18 @@ typealias JSON = [String : AnyObject]
 typealias JSONTaskCompletion = (JSON?, NSHTTPURLResponse?, NSError?) -> Void
 typealias JSONTask = NSURLSessionDataTask
 
+//-----------------------
+//MARK: Enums
+//-----------------------
 enum APIResult<T> {
     
     case Success(T)
     case Failure(ErrorType)
 }
 
+//-----------------------
+//MARK: Protocols
+//-----------------------
 protocol JSONDecodable {
     
     init?(JSON: [String : AnyObject])
@@ -43,6 +52,9 @@ protocol APIClient {
     func fetch<T: JSONDecodable>(request: NSURLRequest, parse: JSON -> T?, completion: APIResult<T> -> Void)
 }
 
+//-----------------------
+//MARK: Extensions
+//-----------------------
 extension APIClient {
     
     func JSONTaskWithRequest(request: NSURLRequest, completion: JSONTaskCompletion) -> JSONTask {

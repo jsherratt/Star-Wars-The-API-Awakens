@@ -8,6 +8,9 @@
 
 import Foundation
 
+//-----------------------
+//MARK: Enums
+//-----------------------
 enum StarWarsError: ErrorType {
     
     case IncompleteData

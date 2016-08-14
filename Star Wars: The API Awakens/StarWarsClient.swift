@@ -8,6 +8,9 @@
 
 import Foundation
 
+//-----------------------
+//MARK: Enums
+//-----------------------
 enum StarWars: Endpoint {
     
     case Characters
@@ -39,6 +42,9 @@ enum StarWars: Endpoint {
     }
 }
 
+//-----------------------
+//MARK: Classes
+//-----------------------
 final class StarWarsClient: APIClient {
     
     let configuration: NSURLSessionConfiguration
@@ -54,7 +60,9 @@ final class StarWarsClient: APIClient {
         self.init(configuration: .defaultSessionConfiguration())
     }
     
-    
+    //-----------------------
+    //MARK: Character
+    //-----------------------
     func fetchCharacters(completion: APIResult<[Character]> -> Void) {
         
         let request = StarWars.Characters.request
@@ -63,12 +71,8 @@ final class StarWarsClient: APIClient {
         
         fetch(request, parse: { json -> [Character]? in
             
-            //print(json["results"]!)
-                    
             if let characters = json["results"] as? [[String : AnyObject]] {
-                
-                //print(characters)
-                
+                                
                 return characters.flatMap { characterDict in
                     
                     return Character(json: characterDict)
@@ -81,20 +85,20 @@ final class StarWarsClient: APIClient {
             }, completion: completion)
     }
     
-    func fetchCharacter(character: Character, completion: APIResult<Character> -> Void) {
+    func fetchCharacter(character character: Character, completion: APIResult<Character> -> Void) {
         
         if let url = character.url {
             
             let url = NSURL(string: url)!
             let request = NSURLRequest(URL: url)
             
-            print(request)
+            //print(request)
             
             fetch(request, parse: { json -> Character? in
                 
                 //print(json["results"]!)
                 
-                if let character = json as? [String : AnyObject] {
+                if let character: [String : AnyObject] = json {
                     
                     return Character(json: character)
 
@@ -105,6 +109,54 @@ final class StarWarsClient: APIClient {
                 }, completion: completion)
         }
     }
+    
+    func fetchHomeForCharacter(character: Character, completion: APIResult<Planet> -> Void) {
+        
+        if let url = character.homeURL {
+            
+            let url = NSURL(string: url)!
+            let request = NSURLRequest(URL: url)
+                        
+            fetch(request, parse: { json -> Planet? in
+                
+                if let planet: [String : AnyObject] = json {
+                    
+                    return Planet(json: planet)
+                    
+                }else {
+                    return nil
+                }
+                
+                }, completion: completion)
+        }
+    }
+    
+    func minMax(characters: [Character]) -> (smallest: Character, largest: Character) {
+        
+        let sortedCharacters = characters.sort { $0.height < $1.height }
+        
+        return (sortedCharacters.first!, sortedCharacters.last!)
+    }
+    
+    //-----------------------
+    //MARK: Vechicles
+    //-----------------------
+    
+    
+    //-----------------------
+    //MARK: Starships
+    //-----------------------
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 }

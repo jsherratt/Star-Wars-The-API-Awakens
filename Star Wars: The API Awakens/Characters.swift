@@ -8,6 +8,9 @@
 
 import Foundation
 
+//-----------------------
+//MARK: Enums
+//-----------------------
 enum Gender: String {
     
     case Male = "Male"
@@ -15,6 +18,9 @@ enum Gender: String {
     case Unknown = "Unkown"
 }
 
+//-----------------------
+//MARK: Structs
+//-----------------------
 struct Character {
     
     var name: String?

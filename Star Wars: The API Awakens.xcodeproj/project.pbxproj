@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D404E7F71D60837700A2D39B /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D404E7F61D60837600A2D39B /* Planet.swift */; };
+		D404E7F91D608DEE00A2D39B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D404E7F81D608DEE00A2D39B /* Utilities.swift */; };
 		D41BED011D5EE3E8007169EC /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41BED001D5EE3E8007169EC /* CharactersViewController.swift */; };
 		D4559CD11D5EA6B300CA3FBE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4559CD01D5EA6B300CA3FBE /* AppDelegate.swift */; };
 		D4559CD31D5EA6B300CA3FBE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4559CD21D5EA6B300CA3FBE /* HomeViewController.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D404E7F61D60837600A2D39B /* Planet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
+		D404E7F81D608DEE00A2D39B /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		D41BED001D5EE3E8007169EC /* CharactersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
 		D4559CCD1D5EA6B300CA3FBE /* Star Wars: The API Awakens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Star Wars: The API Awakens.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4559CD01D5EA6B300CA3FBE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,7 +71,9 @@
 				D4559CD01D5EA6B300CA3FBE /* AppDelegate.swift */,
 				D4559CD21D5EA6B300CA3FBE /* HomeViewController.swift */,
 				D41BED001D5EE3E8007169EC /* CharactersViewController.swift */,
+				D404E7F81D608DEE00A2D39B /* Utilities.swift */,
 				D48D3DAE1D602CB4003F0344 /* Characters.swift */,
+				D404E7F61D60837600A2D39B /* Planet.swift */,
 				D48D3DAA1D6020CA003F0344 /* StarWarsClient.swift */,
 				D48D3DAC1D6025DB003F0344 /* APIClient.swift */,
 				D48D3DB01D6030BE003F0344 /* StarWarsError.swift */,
@@ -161,8 +167,10 @@
 				D48D3DAB1D6020CA003F0344 /* StarWarsClient.swift in Sources */,
 				D48D3DAF1D602CB4003F0344 /* Characters.swift in Sources */,
 				D4559CD31D5EA6B300CA3FBE /* HomeViewController.swift in Sources */,
+				D404E7F71D60837700A2D39B /* Planet.swift in Sources */,
 				D4559CD11D5EA6B300CA3FBE /* AppDelegate.swift in Sources */,
 				D48D3DAD1D6025DB003F0344 /* APIClient.swift in Sources */,
+				D404E7F91D608DEE00A2D39B /* Utilities.swift in Sources */,
 				D41BED011D5EE3E8007169EC /* CharactersViewController.swift in Sources */,
 				D48D3DB11D6030BE003F0344 /* StarWarsError.swift in Sources */,
 			);

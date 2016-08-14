@@ -28,9 +28,12 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
     //-----------------------
     //MARK: Outlets
     //-----------------------
+    
+    //Views
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
     
+    //Labels
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var bornLabel: UILabel!
     @IBOutlet weak var homeLabel: UILabel!
@@ -39,6 +42,10 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var hairColorLabel: UILabel!
     @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var largestLabel: UILabel!
+    
+    //Buttons
+    @IBOutlet weak var englishUnitsButton: UIButton!
+    @IBOutlet weak var metricUnitsButton: UIButton!
     
     //-----------------------
     //MARK: View
@@ -56,6 +63,10 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
         view.addSubview(topBarView)
         setTopBarViewConstraints()
         
+        //Highlight metric button
+        englishUnitsButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
+        metricUnitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        
         setupPickerView()
     }
     
@@ -67,13 +78,16 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 
             case .Success(let characters):
                 
+                //Enable unit buttons
+                self.enableButtons()
+                
                 self.charactersArray = characters
+                self.smallestLabel.text = self.starWarsClient.minMax(characters).smallest.name
+                self.largestLabel.text = self.starWarsClient.minMax(characters).largest.name
                 self.pickerView.selectRow(0, inComponent: 0, animated: true)
                 self.selectedCharacter = characters[self.pickerView.selectedRowInComponent(0)]
                 self.self.pickerView.reloadAllComponents()
-                
-                print(self.charactersArray)
-                
+                                
             case .Failure(let error as NSError):
                 print(error.localizedDescription)
                 
@@ -110,24 +124,40 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     func updateLabelsForCharacter(character: Character) {
         
-        starWarsClient.fetchCharacter(character) { result in
+        //Fetch the data for the selected character
+        starWarsClient.fetchCharacter(character: character) { result in
             
             switch result {
                 
             case .Success(let character):
                 
-                print(character)
-                
-                if let height = character.height {
-                    self.heightLabel.text = "\(height)m"
+                //Fetch the home of the character
+                self.starWarsClient.fetchHomeForCharacter(character) { result in
+                    
+                    switch result {
+                        
+                    case .Success(let home):
+                        
+                        self.englishUnitsButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
+                        self.metricUnitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                        
+                        if let height = character.height {
+                            self.heightLabel.text = "\(height)cm"
+                        }
+                        
+                        self.nameLabel.text = character.name
+                        self.bornLabel.text = character.birthyear
+                        self.homeLabel.text = home.name
+                        self.eyeColorLabel.text = character.eyeColor?.uppercaseFirst
+                        self.hairColorLabel.text = character.hairColor?.uppercaseFirst
+                        
+                    case .Failure(let error as NSError):
+                        print(error.localizedDescription)
+                        
+                    default:
+                        break
+                    }
                 }
-                
-                self.nameLabel.text = character.name
-                self.bornLabel.text = character.birthyear
-                self.homeLabel.text = "NA"
-                //self.heightLabel.text = "\(character.height)"
-                self.eyeColorLabel.text = character.eyeColor
-                self.hairColorLabel.text = character.hairColor
                 
             case .Failure(let error as NSError):
                 print(error.localizedDescription)
@@ -136,6 +166,12 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 break
             }
         }
+    }
+    
+    func enableButtons() {
+        
+        englishUnitsButton.enabled = true
+        metricUnitsButton.enabled = true
     }
     
     //----------------------------
@@ -173,7 +209,30 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
         }
     }
     
+    //-----------------------
+    //MARK: Button Actions
+    //-----------------------
+    @IBAction func englishUnits(sender: UIButton) {
+        
+        englishUnitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        metricUnitsButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
+        
+        if let height = selectedCharacter?.height {
+            
+            heightLabel.text = "\(height.englishUnits.roundDecimal())ft"
+        }
+    }
     
+    @IBAction func metricUnits(sender: UIButton) {
+        
+        englishUnitsButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
+        metricUnitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        
+        if let height = selectedCharacter?.height {
+            
+            heightLabel.text = "\(height)cm"
+        }
+    }
     
     //-----------------------
     //MARK: Extra
