@@ -28,10 +28,10 @@ enum StarWars: Endpoint {
             return "people/"
             
         case .Vehicles:
-            return "a"
+            return "vehicles/"
             
         case .Starships:
-            return "a"
+            return "starships/"
         }
     }
     
@@ -67,15 +67,13 @@ final class StarWarsClient: APIClient {
         
         let request = StarWars.Characters.request
         
-        print(request)
-        
         fetch(request, parse: { json -> [Character]? in
-            
+                        
             if let characters = json["results"] as? [[String : AnyObject]] {
                                 
                 return characters.flatMap { characterDict in
                     
-                    return Character(json: characterDict)
+                    return try? Character(json: characterDict)
                 }
                 
             }else {
@@ -83,31 +81,6 @@ final class StarWarsClient: APIClient {
             }
             
             }, completion: completion)
-    }
-    
-    func fetchCharacter(character character: Character, completion: APIResult<Character> -> Void) {
-        
-        if let url = character.url {
-            
-            let url = NSURL(string: url)!
-            let request = NSURLRequest(URL: url)
-            
-            //print(request)
-            
-            fetch(request, parse: { json -> Character? in
-                
-                //print(json["results"]!)
-                
-                if let character: [String : AnyObject] = json {
-                    
-                    return Character(json: character)
-
-                }else {
-                    return nil
-                }
-                
-                }, completion: completion)
-        }
     }
     
     func fetchHomeForCharacter(character: Character, completion: APIResult<Planet> -> Void) {
@@ -121,13 +94,61 @@ final class StarWarsClient: APIClient {
                 
                 if let planet: [String : AnyObject] = json {
                     
-                    return Planet(json: planet)
+                    return try? Planet(json: planet)
                     
                 }else {
                     return nil
                 }
                 
                 }, completion: completion)
+        }
+    }
+    
+    func fetchVehiclesForCharacter(character: Character, completion: APIResult<Vehicle> -> Void) {
+        
+        if let urlArray = character.vehiclesURL {
+            
+            for url in urlArray {
+                
+                let url = NSURL(string: url)!
+                let request = NSURLRequest(URL: url)
+                
+                fetch(request, parse: { json -> Vehicle? in
+                    
+                    if let vehicle: [String : AnyObject] = json {
+                        
+                        return try? Vehicle(vehicleNameJson: vehicle)
+                        
+                    }else {
+                        return nil
+                    }
+                    
+                    }, completion: completion)
+            }
+        }
+    }
+    
+    func fetchStarshipsForCharacter(character: Character, completion: APIResult<Starship> -> Void) {
+        
+        if let urlArray = character.starshipsURL {
+            
+            for url in urlArray {
+                
+                let url = NSURL(string: url)!
+                let request = NSURLRequest(URL: url)
+                
+                fetch(request, parse: { json -> Starship? in
+                    
+                    if let starship: [String : AnyObject] = json {
+                        
+                        return try? Starship(starshipNameJson: starship)
+                        
+                    }else {
+                        return nil
+                    }
+                    
+                    }, completion: completion)
+            }
         }
     }
     
@@ -141,22 +162,60 @@ final class StarWarsClient: APIClient {
     //-----------------------
     //MARK: Vechicles
     //-----------------------
+    func fetchVehicles(completion: APIResult<[Vehicle]> -> Void) {
+        
+        let request = StarWars.Vehicles.request
+        
+        fetch(request, parse: { json -> [Vehicle]? in
+                        
+            if let vehicles = json["results"] as? [[String : AnyObject]] {
+                
+                return vehicles.flatMap { vehicleDict in
+                                        
+                    return try? Vehicle(json: vehicleDict)
+                }
+                
+            }else {
+                return nil
+            }
+            
+            }, completion: completion)
+    }
     
+    func minMax(vehicles: [Vehicle]) -> (smallest: Vehicle, largest: Vehicle) {
+        
+        let sortedVehicles = vehicles.sort { $0.length < $1.length }
+        
+        return (sortedVehicles.first!, sortedVehicles.last!)
+    }
     
     //-----------------------
     //MARK: Starships
     //-----------------------
+    func fetchStarships(completion: APIResult<[Starship]> -> Void) {
+        
+        let request = StarWars.Starships.request
+        
+        fetch(request, parse: { json -> [Starship]? in
+                        
+            if let statships = json["results"] as? [[String : AnyObject]] {
+                
+                return statships.flatMap { starshipDict in
+                    
+                    return try? Starship(json: starshipDict)
+                }
+                
+            }else {
+                return nil
+            }
+            
+            }, completion: completion)
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    func minMax(starships: [Starship]) -> (smallest: Starship, largest: Starship) {
+        
+        let sortedStarships = starships.sort { $0.length < $1.length }
+        
+        return (sortedStarships.first!, sortedStarships.last!)
+    }
 }

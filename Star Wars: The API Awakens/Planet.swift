@@ -12,13 +12,10 @@ struct Planet {
     
     var name: String?
     
-    init(json: [String : AnyObject]) {
+    init(json: [String : AnyObject]) throws {
         
-        if let name = json["name"] as? String {
-            
-            self.name = name
-        }else {
-            self.name = "n/a"
-        }
+    guard let name = json["name"] as? String else { throw StarWarsError.IncompleteData }
+    
+        self.name = name
     }
 }

@@ -9,16 +9,6 @@
 import Foundation
 
 //-----------------------
-//MARK: Enums
-//-----------------------
-enum Gender: String {
-    
-    case Male = "Male"
-    case Female = "Female"
-    case Unknown = "Unkown"
-}
-
-//-----------------------
 //MARK: Structs
 //-----------------------
 struct Character {
@@ -30,12 +20,14 @@ struct Character {
     var eyeColor: String?
     var hairColor: String?
     
-    var homeURL: String?
     var url: String?
+    var homeURL: String?
+    var vehiclesURL: [String]?
+    var starshipsURL: [String]?
     
-    init(json: [String : AnyObject])  {
+    init(json: [String : AnyObject]) throws {
         
-        guard let name = json["name"] as? String, let birthyear = json["birth_year"] as? String, let homeURL = json["homeworld"] as? String, let url = json["url"] as? String, let height = json["height"] as? String, let eyeColor = json["eye_color"] as? String, let hairColor = json["hair_color"] as? String else { return }
+        guard let name = json["name"] as? String, let birthyear = json["birth_year"] as? String, let height = json["height"] as? String, let eyeColor = json["eye_color"] as? String, let hairColor = json["hair_color"] as? String, let url = json["url"] as? String, let homeURL = json["homeworld"] as? String, let vehiclesURL = json["vehicles"] as? [String], let starshipsURL = json["starships"] as? [String] else { throw StarWarsError.IncompleteData }
         
         self.name = name
         self.birthyear = birthyear
@@ -43,7 +35,9 @@ struct Character {
         self.eyeColor = eyeColor
         self.hairColor = hairColor
         
-        self.homeURL = homeURL
         self.url = url
+        self.homeURL = homeURL
+        self.vehiclesURL = vehiclesURL
+        self.starshipsURL = starshipsURL
     }
 }

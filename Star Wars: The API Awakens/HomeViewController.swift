@@ -13,6 +13,8 @@ class HomeViewController: UIViewController {
     //-----------------------
     //MARK: Variables
     //-----------------------
+    
+    //Views
     var characterBreakLine = UIView()
     var vehicleBreakLine = UIView()
     
@@ -36,7 +38,7 @@ class HomeViewController: UIViewController {
         self.navigationController?.navigationBar.translucent = true
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor(red: 170/255.0, green: 170/255.0, blue: 170/255.0, alpha: 1.0), NSFontAttributeName:UIFont.boldSystemFontOfSize(21.0)]
         
-        //Add both of the break lines to the view
+        //Add two break lines to the view to separate the selections
         characterBreakLine.backgroundColor = UIColor(red: 56/255.0, green: 57/255.0, blue: 59/255.0, alpha: 0.5)
         view.addSubview(characterBreakLine)
         
@@ -44,15 +46,15 @@ class HomeViewController: UIViewController {
         view.addSubview(vehicleBreakLine)
         
         //Setup constraints
-        setBreakLineConstraints()
+        setupBreakLineConstraints()
     }
     
     //-----------------------
-    //MARK: Functions
+    //MARK: Constraints
     //-----------------------
     
     //Setup the constraints for the break lines between the sections
-    func setBreakLineConstraints() {
+    func setupBreakLineConstraints() {
         
         characterBreakLine.translatesAutoresizingMaskIntoConstraints = false
         vehicleBreakLine.translatesAutoresizingMaskIntoConstraints = false

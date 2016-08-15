@@ -13,13 +13,21 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
     //-----------------------
     //MARK: Variables
     //-----------------------
+    
+    //Buttons
     let backButton = UIImage(named: "backButton")
+    
+    //Break lines
     let topBarView = UIView()
     
+    //Api client
     let starWarsClient = StarWarsClient()
+    
+    //Character variables
     var charactersArray: [Character]?
+    var vehiclesArray: [String] = []
+    var starshipsArray: [String] = []
     var selectedCharacter: Character? {
-        
         didSet {
             self.updateLabelsForCharacter(selectedCharacter!)
         }
@@ -30,6 +38,7 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
     //-----------------------
     
     //Views
+    @IBOutlet weak var infoViewStackView: UIStackView!
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
     
@@ -40,6 +49,8 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var eyeColorLabel: UILabel!
     @IBOutlet weak var hairColorLabel: UILabel!
+    @IBOutlet weak var vehiclesLabel: UILabel!
+    @IBOutlet weak var starshipsLabel: UILabel!
     @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var largestLabel: UILabel!
     
@@ -67,9 +78,21 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
         englishUnitsButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
         metricUnitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
+        //Setup and populate the picker view
         setupPickerView()
     }
     
+    //-----------------------
+    //MARK: Functions
+    //-----------------------
+    
+    //Return to the home view
+    func backToHome() {
+        
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    //Setup and populate the picker view
     func setupPickerView() {
         
         starWarsClient.fetchCharacters { result in
@@ -87,7 +110,7 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 self.pickerView.selectRow(0, inComponent: 0, animated: true)
                 self.selectedCharacter = characters[self.pickerView.selectedRowInComponent(0)]
                 self.self.pickerView.reloadAllComponents()
-                                
+                
             case .Failure(let error as NSError):
                 print(error.localizedDescription)
                 
@@ -97,67 +120,42 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
         }
     }
     
-    //-----------------------
-    //MARK: Functions
-    //-----------------------
-    
-    //Return to the home view
-    func backToHome() {
-        
-        self.navigationController?.popToRootViewControllerAnimated(true)
-    }
-    
-    //Setup the constraints for the break lines between the sections
-    func setTopBarViewConstraints() {
-        
-        topBarView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activateConstraints([
-            
-            topBarView.topAnchor.constraintEqualToAnchor(view.topAnchor),
-            topBarView.bottomAnchor.constraintEqualToAnchor(infoView.topAnchor),
-            topBarView.leftAnchor.constraintEqualToAnchor(view.leftAnchor),
-            topBarView.rightAnchor.constraintEqualToAnchor(view.rightAnchor),
-            
-            ])
-    }
-    
+    //Update the labels when a new character is selected
     func updateLabelsForCharacter(character: Character) {
         
-        //Fetch the data for the selected character
-        starWarsClient.fetchCharacter(character: character) { result in
+        fetchVehiclesForCharacter(character)
+        fetchStarshipsForCharacter(character)
+        fetchHomeForCharacter(character)
+        
+        if let height = self.selectedCharacter?.height {
+            self.heightLabel.text = "\(height)cm"
+        }
+        
+        self.nameLabel.text = self.selectedCharacter?.name
+        self.nameLabel.text = self.selectedCharacter?.name
+        self.bornLabel.text = self.selectedCharacter?.birthyear
+        self.eyeColorLabel.text = self.selectedCharacter?.eyeColor?.uppercaseFirst
+        self.hairColorLabel.text = self.selectedCharacter?.hairColor?.uppercaseFirst
+        
+    }
+    
+    //Fetch the home of the character
+    func fetchHomeForCharacter(character: Character) {
+    
+        self.starWarsClient.fetchHomeForCharacter(character) { result in
             
             switch result {
                 
-            case .Success(let character):
+            case .Success(let home):
                 
-                //Fetch the home of the character
-                self.starWarsClient.fetchHomeForCharacter(character) { result in
-                    
-                    switch result {
-                        
-                    case .Success(let home):
-                        
-                        self.englishUnitsButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
-                        self.metricUnitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-                        
-                        if let height = character.height {
-                            self.heightLabel.text = "\(height)cm"
-                        }
-                        
-                        self.nameLabel.text = character.name
-                        self.bornLabel.text = character.birthyear
-                        self.homeLabel.text = home.name
-                        self.eyeColorLabel.text = character.eyeColor?.uppercaseFirst
-                        self.hairColorLabel.text = character.hairColor?.uppercaseFirst
-                        
-                    case .Failure(let error as NSError):
-                        print(error.localizedDescription)
-                        
-                    default:
-                        break
-                    }
+                self.englishUnitsButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
+                self.metricUnitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                
+                if let height = self.selectedCharacter?.height {
+                    self.heightLabel.text = "\(height)cm"
                 }
+                
+                self.homeLabel.text = home.name
                 
             case .Failure(let error as NSError):
                 print(error.localizedDescription)
@@ -168,6 +166,69 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
         }
     }
     
+    //Fetch the vehicle(s) for the character
+    func fetchVehiclesForCharacter(character: Character) {
+        
+        if selectedCharacter?.vehiclesURL?.count > 0 {
+            
+            self.starWarsClient.fetchVehiclesForCharacter(character) { result in
+                
+                switch result {
+                    
+                case .Success(let vechicles):
+                    
+                    if vechicles.name != nil {
+                        
+                        self.vehiclesArray.append(vechicles.name!)
+                        self.vehiclesLabel.text = "\(self.vehiclesArray.joinWithSeparator(", "))"
+                    }
+                    
+                case .Failure(let error as NSError):
+                    print(error)
+                    
+                default:
+                    break
+                }
+            }
+            
+        }else {
+            self.vehiclesLabel.text = "N/a"
+        }
+    }
+    
+    //Fetch the starship(s) for the character
+    func fetchStarshipsForCharacter(character: Character) {
+        
+        if selectedCharacter?.starshipsURL?.count > 0 {
+            
+            self.starWarsClient.fetchStarshipsForCharacter(character) { result in
+                
+                switch result {
+                    
+                case .Success(let starships):
+                    
+                    if starships.name != nil {
+                        
+                        self.starshipsArray.append(starships.name!)
+                        self.starshipsLabel.text = "\(self.starshipsArray.joinWithSeparator(", "))"
+                    }
+                    
+                    //self.starshipsLabel.text = "\(self.starshipsArray)"
+                    
+                case .Failure(let error as NSError):
+                    print(error)
+                    
+                default:
+                    break
+                }
+            }
+            
+        }else {
+            self.starshipsLabel.text = "N/a"
+        }
+    }
+    
+    //Enable the unit buttons
     func enableButtons() {
         
         englishUnitsButton.enabled = true
@@ -203,6 +264,9 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
+        vehiclesArray.removeAll()
+        starshipsArray.removeAll()
+        
         if let characters = self.charactersArray {
             let character = characters[row]
             selectedCharacter = character
@@ -212,6 +276,8 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
     //-----------------------
     //MARK: Button Actions
     //-----------------------
+    
+    //Set height to english (imperial) form
     @IBAction func englishUnits(sender: UIButton) {
         
         englishUnitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -223,6 +289,7 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
         }
     }
     
+    //Set height to metric form
     @IBAction func metricUnits(sender: UIButton) {
         
         englishUnitsButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
@@ -232,6 +299,25 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
             
             heightLabel.text = "\(height)cm"
         }
+    }
+    
+    //-----------------------
+    //MARK: Constraints
+    //-----------------------
+    
+    //Setup the constraints for the break lines between the sections
+    func setTopBarViewConstraints() {
+        
+        topBarView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activateConstraints([
+            
+            topBarView.topAnchor.constraintEqualToAnchor(view.topAnchor),
+            topBarView.bottomAnchor.constraintEqualToAnchor(infoView.topAnchor),
+            topBarView.leftAnchor.constraintEqualToAnchor(view.leftAnchor),
+            topBarView.rightAnchor.constraintEqualToAnchor(view.rightAnchor),
+            
+            ])
     }
     
     //-----------------------
