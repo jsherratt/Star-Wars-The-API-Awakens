@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VehiclesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class VehiclesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     //-----------------------
     //MARK: Variables
@@ -55,11 +55,21 @@ class VehiclesViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var englishUnitsButton: UIButton!
     @IBOutlet weak var metricUnitsButton: UIButton!
     
+    //Text field
+    @IBOutlet weak var exchangeTextField: UITextField!
+    
     //-----------------------
     //MARK: View
     //-----------------------
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Set delegate of exchange text field
+        exchangeTextField.delegate = self
+        
+        //Add tap gesture recognizer to dissmiss keyboard when the view is tapped
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGestureRecognizer)
         
         //Add notification observer for the showAlert function
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showAlert), name: "NetworkAlert", object: nil)
@@ -160,6 +170,12 @@ class VehiclesViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         metricUnitsButton.enabled = true
     }
     
+    //Dismiss the keyboard
+    func dismissKeyboard() {
+        
+        view.endEditing(true)
+    }
+    
     //Show alert there is no network connection
     func showAlert() {
         
@@ -201,6 +217,39 @@ class VehiclesViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
+    //----------------------------
+    //MARK: Text Field Delegate
+    //----------------------------
+    
+    //Reset button highlights when user begins editing the text field
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        usdButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
+        creditsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        //Reset button highlights
+        usdButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
+        creditsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        
+        //Set the cost label back to credits
+        if let cost = selectedVehicle?.cost {
+            
+            costLabel.text = "\(cost) cr"
+        }
+        
+        //Only allow number input to text fields that require numbers only
+        let numberOnly = NSCharacterSet.init(charactersInString: "0123456789.")
+        
+        let stringFromTextField = NSCharacterSet.init(charactersInString: string)
+        
+        let stringValid = numberOnly.isSupersetOfSet(stringFromTextField)
+        
+        return stringValid
+    }
+    
     //-----------------------
     //MARK: Button Actions
     //-----------------------
@@ -213,7 +262,23 @@ class VehiclesViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         if let cost = selectedVehicle?.cost {
             
-            costLabel.text = "\(cost.usdUnits) usd"
+            if let text = exchangeTextField.text {
+                
+                let numberFromText = Int(text)
+                
+                if numberFromText <= 0 {
+                    
+                    //Reset button highlights
+                    usdButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
+                    creditsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                    
+                    displayAlert(title: "Error", message: "You cannot enter 0 or a negative value for the exchange rate")
+                    
+                    
+                }else {
+                    costLabel.text = "\(cost * numberFromText!) usd"
+                }
+            }
         }
     }
     
@@ -270,6 +335,11 @@ class VehiclesViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             topBarView.rightAnchor.constraintEqualToAnchor(view.rightAnchor),
             
             ])
+    }
+    
+    //Deinit the notification observer
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "NetworkAlert", object: nil)
     }
     
     //-----------------------

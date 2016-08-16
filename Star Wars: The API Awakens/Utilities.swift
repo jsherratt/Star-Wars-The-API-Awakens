@@ -73,3 +73,43 @@ extension UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
 }
+
+//Extension of UITextField to add a max length property to a text field that can be set in interface builder
+
+private var maxLengths = [UITextField: Int]()
+
+extension UITextField {
+    
+    //set the maxLength property with @IBInspectable to make it available to Interface Builder.This then provides an editor for its value in the Attributes Inspector
+    @IBInspectable var maxLength: Int {
+        
+        get {
+            
+            //Filter out cases where no maximum length has been defined for the text field, in which case, simply return the theoretical maximum string size
+            guard let length = maxLengths[self] else {
+                return Int.max
+            }
+            return length
+        }
+        set {
+            
+            maxLengths[self] = newValue
+            
+            //Use addTarget in maxLength‘s setter to ensure that if a text field is assigned a maximum length, the limitLength method is called whenever the text field’s contents change
+            addTarget(self, action: #selector(limitLength), forControlEvents: UIControlEvents.EditingChanged)
+        }
+    }
+    
+    func limitLength(textField: UITextField) {
+        
+        //Any case that gets past this is one where the text about to go into the text field is longer than the maximum length
+        guard let prospectiveText = textField.text
+            where prospectiveText.characters.count > maxLength else { return }
+        
+        let selection = selectedTextRange
+        
+        text = prospectiveText.substringWithRange(Range<String.Index>(prospectiveText.startIndex ..< prospectiveText.startIndex.advancedBy(maxLength)))
+        selectedTextRange = selection
+    }
+}
+

@@ -146,13 +146,13 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c4Q-ef-4f4">
                                                 <rect key="frame" x="0.0" y="0.0" width="479" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vF-ah-R38">
                                                 <rect key="frame" x="0.0" y="31" width="479" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -453,13 +453,13 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KiM-va-6V5">
                                                 <rect key="frame" x="0.0" y="0.0" width="479" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQ9-eg-eLv">
                                                 <rect key="frame" x="0.0" y="31" width="479" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -624,6 +624,22 @@
                                             <action selector="usdUnits:" destination="qwm-1E-rcQ" eventType="touchUpInside" id="yZe-WE-zxT"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter an exchange rate" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L0S-hB-hTI">
+                                        <rect key="frame" x="217" y="236" width="166" height="30"/>
+                                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="166" id="Bzg-ay-rpw"/>
+                                            <constraint firstAttribute="height" constant="30" id="Ca5-nD-Vmt"/>
+                                        </constraints>
+                                        <color key="textColor" red="0.08235294118" green="0.094117647060000004" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                                <integer key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.08235294118" green="0.094117647060000004" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -638,7 +654,9 @@
                                     <constraint firstItem="05I-fw-Ms8" firstAttribute="baseline" secondItem="7s9-5M-oHL" secondAttribute="baseline" id="XiZ-OI-eQU"/>
                                     <constraint firstItem="7s9-5M-oHL" firstAttribute="baseline" secondItem="z5Y-Ac-d0x" secondAttribute="baseline" id="Zd4-Wa-RQR"/>
                                     <constraint firstItem="0fg-sD-Gct" firstAttribute="top" secondItem="RY5-YT-zY6" secondAttribute="bottom" constant="20" id="biq-s1-FxX"/>
+                                    <constraint firstItem="L0S-hB-hTI" firstAttribute="centerX" secondItem="8Yy-Rd-71z" secondAttribute="centerX" id="gf1-J8-gex"/>
                                     <constraint firstItem="RY5-YT-zY6" firstAttribute="leading" secondItem="8Yy-Rd-71z" secondAttribute="leading" constant="8" id="ium-3f-Bym"/>
+                                    <constraint firstAttribute="bottom" secondItem="L0S-hB-hTI" secondAttribute="bottom" constant="34" id="sO5-Cu-cnZ"/>
                                     <constraint firstItem="0fg-sD-Gct" firstAttribute="leading" secondItem="8Yy-Rd-71z" secondAttribute="leading" constant="20" id="tXC-9S-Ct3"/>
                                     <constraint firstAttribute="trailing" secondItem="0fg-sD-Gct" secondAttribute="trailing" constant="20" id="u8f-kE-wRQ"/>
                                     <constraint firstItem="05I-fw-Ms8" firstAttribute="leading" secondItem="7s9-5M-oHL" secondAttribute="trailing" constant="10" id="xPg-2H-YuA"/>
@@ -675,6 +693,7 @@
                         <outlet property="creditsButton" destination="eSX-SA-gYg" id="9tG-ZT-s1h"/>
                         <outlet property="crewLabel" destination="QRD-Oc-0Or" id="dRe-cf-tOj"/>
                         <outlet property="englishUnitsButton" destination="7s9-5M-oHL" id="M0j-Jc-8EE"/>
+                        <outlet property="exchangeTextField" destination="L0S-hB-hTI" id="Zig-LQ-6kh"/>
                         <outlet property="infoView" destination="8Yy-Rd-71z" id="VFf-wI-WGb"/>
                         <outlet property="infoViewStackView" destination="0fg-sD-Gct" id="uIo-0s-VGR"/>
                         <outlet property="largestLabel" destination="hQ9-eg-eLv" id="nIi-Yj-KXt"/>
@@ -688,7 +707,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iED-qK-lzs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1435" y="1427"/>
+            <point key="canvasLocation" x="1435" y="1479"/>
         </scene>
         <!--Starships View Controller-->
         <scene sceneID="ISf-Hw-3wI">
@@ -731,13 +750,13 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W8V-4Y-4KX">
                                                 <rect key="frame" x="0.0" y="0.0" width="479" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbE-1w-QGv">
                                                 <rect key="frame" x="0.0" y="31" width="479" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -902,6 +921,21 @@
                                             <action selector="usdUnits:" destination="Kcr-jx-Tbe" eventType="touchUpInside" id="fV5-iF-2Q1"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter an exchange rate" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k7S-QX-sWe">
+                                        <rect key="frame" x="217" y="235" width="166" height="30"/>
+                                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="166" id="aG1-Bg-gwz"/>
+                                        </constraints>
+                                        <color key="textColor" red="0.08235294118" green="0.094117647060000004" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                                <integer key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.08235294118" green="0.094117647060000004" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -911,6 +945,7 @@
                                     <constraint firstItem="DZH-VZ-4wn" firstAttribute="baseline" secondItem="cSH-8j-qtX" secondAttribute="baseline" id="DdD-PO-dhW"/>
                                     <constraint firstItem="yRO-br-KHz" firstAttribute="baseline" secondItem="ck8-Kl-7uo" secondAttribute="baseline" id="IDf-BW-GAE"/>
                                     <constraint firstItem="kaO-L3-98p" firstAttribute="leading" secondItem="9oN-OI-epo" secondAttribute="leading" constant="8" id="KlK-2S-WAf"/>
+                                    <constraint firstItem="k7S-QX-sWe" firstAttribute="centerX" secondItem="9oN-OI-epo" secondAttribute="centerX" id="NJw-pN-k6A"/>
                                     <constraint firstAttribute="bottom" secondItem="jY6-Nj-2OD" secondAttribute="bottom" constant="140" id="O7U-Xq-V4J"/>
                                     <constraint firstAttribute="trailing" secondItem="jY6-Nj-2OD" secondAttribute="trailing" constant="20" id="Qdc-nx-mRe"/>
                                     <constraint firstItem="DZH-VZ-4wn" firstAttribute="leading" secondItem="cSH-8j-qtX" secondAttribute="trailing" constant="5" id="RJY-1W-nWp"/>
@@ -918,6 +953,7 @@
                                     <constraint firstItem="jY6-Nj-2OD" firstAttribute="top" secondItem="kaO-L3-98p" secondAttribute="bottom" constant="20" id="UVs-DY-KMn"/>
                                     <constraint firstItem="cSH-8j-qtX" firstAttribute="baseline" secondItem="Jg5-Fy-8AQ" secondAttribute="baseline" id="Usz-aF-AXY"/>
                                     <constraint firstItem="kaO-L3-98p" firstAttribute="top" secondItem="9oN-OI-epo" secondAttribute="top" constant="8" id="ZWu-mW-X1y"/>
+                                    <constraint firstAttribute="bottom" secondItem="k7S-QX-sWe" secondAttribute="bottom" constant="35" id="x82-TN-HiT"/>
                                     <constraint firstAttribute="trailing" secondItem="5gh-NL-f8k" secondAttribute="trailing" constant="20" id="xdP-7Y-KKh"/>
                                     <constraint firstAttribute="trailing" secondItem="kaO-L3-98p" secondAttribute="trailing" constant="8" id="yPb-WE-jsZ"/>
                                 </constraints>
@@ -953,6 +989,7 @@
                         <outlet property="creditsButton" destination="DZH-VZ-4wn" id="wt7-hQ-ZoO"/>
                         <outlet property="crewLabel" destination="jfI-U1-p5u" id="rjn-QD-JoB"/>
                         <outlet property="englishUnitsButton" destination="yRO-br-KHz" id="GLX-SU-Jnf"/>
+                        <outlet property="exchangeTextField" destination="k7S-QX-sWe" id="oYj-PH-Owf"/>
                         <outlet property="infoView" destination="9oN-OI-epo" id="pVi-xq-8zg"/>
                         <outlet property="infoViewStackView" destination="jY6-Nj-2OD" id="w2h-m2-cp8"/>
                         <outlet property="largestLabel" destination="DbE-1w-QGv" id="HV4-h9-Gxf"/>
@@ -966,7 +1003,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Gn-Sd-MUV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="787" y="1427"/>
+            <point key="canvasLocation" x="787" y="1479"/>
         </scene>
     </scenes>
     <resources>

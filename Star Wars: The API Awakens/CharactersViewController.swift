@@ -325,6 +325,11 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
             ])
     }
     
+    //Deinit the notification observer
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "NetworkAlert", object: nil)
+    }
+    
     //-----------------------
     //MARK: Extra
     //-----------------------
