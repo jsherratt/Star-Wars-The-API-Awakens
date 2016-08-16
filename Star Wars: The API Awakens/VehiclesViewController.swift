@@ -126,14 +126,20 @@ class VehiclesViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         if let cost = selectedVehicle?.cost {
             costLabel.text = "\(cost) cr"
+        }else {
+            costLabel.text = "N/a"
         }
         
         if let length = selectedVehicle?.length {
             lengthLabel.text = "\(length.roundDecimal()) m"
+        }else {
+            lengthLabel.text = "N/a"
         }
         
         if let crew = selectedVehicle?.crew {
             crewLabel.text = "\(crew)"
+        }else {
+            crewLabel.text = "N/a"
         }
         
         makeLabel.text = selectedVehicle?.make

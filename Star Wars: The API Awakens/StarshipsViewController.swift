@@ -126,14 +126,20 @@ class StarshipsViewController: UIViewController {
         
         if let cost = selectedStarship?.cost {
             costLabel.text = "\(cost) cr"
+        }else {
+            costLabel.text = "N/a"
         }
         
         if let length = selectedStarship?.length {
             lengthLabel.text = "\(length.roundDecimal()) m"
+        }else {
+            lengthLabel.text = "N/a"
         }
         
         if let crew = selectedStarship?.crew {
             crewLabel.text = "\(crew)"
+        }else {
+            crewLabel.text = "N/a"
         }
         
         makeLabel.text = selectedStarship?.make
