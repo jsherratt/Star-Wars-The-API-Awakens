@@ -64,6 +64,9 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Add notification observer for the showAlert function
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showAlert), name: "NetworkAlert", object: nil)
+        
         //Navitgation bar
         self.navigationItem.title = "Characters"
         self.navigationController?.navigationBar.tintColor = UIColor(red: 170/255.0, green: 170/255.0, blue: 170/255.0, alpha: 1.0)
@@ -123,6 +126,9 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
     //Update the labels when a new character is selected
     func updateLabelsForCharacter(character: Character) {
         
+        self.englishUnitsButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
+        self.metricUnitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        
         fetchVehiclesForCharacter(character)
         fetchStarshipsForCharacter(character)
         fetchHomeForCharacter(character)
@@ -147,13 +153,6 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
             switch result {
                 
             case .Success(let home):
-                
-                self.englishUnitsButton.setTitleColor(UIColor(red: 140/255.0, green: 140/255.0, blue: 140/255.0, alpha: 1.0), forState: .Normal)
-                self.metricUnitsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-                
-                if let height = self.selectedCharacter?.height {
-                    self.heightLabel.text = "\(height)cm"
-                }
                 
                 self.homeLabel.text = home.name
                 
@@ -233,6 +232,12 @@ class CharactersViewController: UIViewController, UIPickerViewDelegate, UIPicker
         
         englishUnitsButton.enabled = true
         metricUnitsButton.enabled = true
+    }
+    
+    //Show alert when there is no network connection
+    func showAlert() {
+        
+        displayAlert(title: "Error", message: "Check the network connection and try again")
     }
     
     //----------------------------

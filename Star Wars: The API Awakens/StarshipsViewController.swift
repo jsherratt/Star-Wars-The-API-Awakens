@@ -61,6 +61,9 @@ class StarshipsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Add notification observer for the showAlert function
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showAlert), name: "NetworkAlert", object: nil)
+        
         //Navitgation bar
         self.navigationItem.title = "Starships"
         self.navigationController?.navigationBar.tintColor = UIColor(red: 170/255.0, green: 170/255.0, blue: 170/255.0, alpha: 1.0)
@@ -149,6 +152,12 @@ class StarshipsViewController: UIViewController {
         creditsButton.enabled = true
         englishUnitsButton.enabled = true
         metricUnitsButton.enabled = true
+    }
+    
+    //Show alert when there is no network connection
+    func showAlert() {
+        
+        displayAlert(title: "Error", message: "Check the network connection and try again")
     }
     
     //----------------------------

@@ -14,5 +14,4 @@ import Foundation
 enum StarWarsError: ErrorType {
     
     case IncompleteData
-    case NoInternetConnection
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2016 jsherratt. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 //-----------------------
 //MARK: Extensions
@@ -57,5 +57,19 @@ extension Double {
     func roundDecimal() -> Double {
 
         return round(self * 100) / 100
+    }
+}
+
+extension UIViewController {
+    
+    func displayAlert(title title:String, message:String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (alertAction) -> Void in
+            
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }
